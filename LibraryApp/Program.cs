@@ -189,7 +189,7 @@ namespace LibraryApp
             {
                 SearchCatagory(userChoice, theList);
             }
-            while (true) ;
+            while (true);
         }
         public static void RunIt(List<Book> theList)
         {
