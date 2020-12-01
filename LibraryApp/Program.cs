@@ -38,8 +38,16 @@ namespace LibraryApp
             return bookList;
         }
 
-        public static List<Book> searchIndex(List<Book> bookIndex)
+        public static List<Book> SearchIndex(List<Book> bookIndex)
         {
+            Console.Clear();
+
+            foreach (var book in bookIndex)
+            {
+                Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
+            }
+
+            Console.WriteLine();
             Console.WriteLine("1. Author");
             Console.WriteLine("2. Title");
             Console.Write("Please select one of the above items to search by: ");
@@ -69,7 +77,7 @@ namespace LibraryApp
 
                         foreach (Book book in bookIndex)
                         {
-                            if (author.Contains(book.Author, StringComparison.OrdinalIgnoreCase))
+                            if (book.Author.Contains(author, StringComparison.OrdinalIgnoreCase))
                             {
                                 Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
                                 searchList.Add(book);
@@ -86,7 +94,7 @@ namespace LibraryApp
 
                         foreach (Book book in bookIndex)
                         {
-                            if (title.Contains(book.Title, StringComparison.OrdinalIgnoreCase))
+                            if (book.Title.Contains(title, StringComparison.OrdinalIgnoreCase))
                             {
                                 Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
                                 searchList.Add(book);
@@ -272,8 +280,7 @@ namespace LibraryApp
                         DisplayAllAvailibleBooks(theList);
                         break;
                     case 3:
-
-                        SearchIt(theList);
+                        SearchIndex(theList);
                         break;
                     case 4:
                         AddBook();
@@ -291,7 +298,6 @@ namespace LibraryApp
                         break;
                 }
             }
-             while (true);
         }
     }
 
