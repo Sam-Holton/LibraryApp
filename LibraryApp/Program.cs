@@ -41,15 +41,9 @@ namespace LibraryApp
         public static List<Book> SearchIndex(List<Book> bookIndex)
         {
             Console.Clear();
-
-            foreach (var book in bookIndex)
-            {
-                Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
-            }
-
+            Console.WriteLine("[1] Author");
+            Console.WriteLine("[2] Title");
             Console.WriteLine();
-            Console.WriteLine("1. Author");
-            Console.WriteLine("2. Title");
             Console.Write("Please select one of the above items to search by: ");
             int userChoice;
 
@@ -62,7 +56,7 @@ namespace LibraryApp
                 }
                 else
                 {
-                    Console.WriteLine("Please select either 1 for Author or 2 for Title: ");
+                    Console.Write("Please select either 1 for Author or 2 for Title: ");
                 }
             } while (true);
 
@@ -83,6 +77,9 @@ namespace LibraryApp
                                 searchList.Add(book);
                             }
                         }
+
+                        Console.WriteLine("\nPress Enter to Continue");
+                        Console.Read();
                         return searchList;
                     }
                 case 2:
@@ -100,6 +97,9 @@ namespace LibraryApp
                                 searchList.Add(book);
                             }
                         }
+
+                        Console.WriteLine("\nPress Enter to Continue");
+                        Console.Read();
                         return searchList;
                     }
                 default:
@@ -261,43 +261,50 @@ namespace LibraryApp
         {
 
             int userChoice;
-            Console.WriteLine("Welcome to our library what would you like to do?");
-            Console.WriteLine("[1] See all books");
-            Console.WriteLine("[2] See all availible books");
-            Console.WriteLine("[3] Search books");
-            Console.WriteLine("[4] Add a book");
-            Console.WriteLine("[5] Checkout a book");
-            Console.WriteLine("[6] Return a book");
-            string userinput = Console.ReadLine();
-            if (int.TryParse(userinput, out userChoice) && userChoice > 0 && userChoice < 7)
+            do
             {
-                switch (userChoice)
+                Console.Clear();
+                Console.WriteLine("Welcome to our library what would you like to do?");
+                Console.WriteLine("[1] See all books");
+                Console.WriteLine("[2] See all availible books");
+                Console.WriteLine("[3] Search books");
+                Console.WriteLine("[4] Add a book");
+                Console.WriteLine("[5] Checkout a book");
+                Console.WriteLine("[6] Return a book");
+                Console.WriteLine("[7] Exit Program");
+                string userinput = Console.ReadLine();
+                if (int.TryParse(userinput, out userChoice) && userChoice > 0 && userChoice < 8)
                 {
-                    case 1:
-                        DisplayAllBooks(theList);
-                        break;
-                    case 2:
-                        DisplayAllAvailibleBooks(theList);
-                        break;
-                    case 3:
-                        SearchIndex(theList);
-                        break;
-                    case 4:
-                        AddBook();
-                        break;
-                    case 5:
-                        CheckoutABook(theList);
-                        OverWritetextFile(theList);
+                    switch (userChoice)
+                    {
+                        case 1:
+                            DisplayAllBooks(theList);
                             break;
-                    case 6:
-                        ReturnABook(theList);
-                        OverWritetextFile(theList);
-                        break;
-                    default:
-                        Console.WriteLine("Please enter a valid option");
-                        break;
+                        case 2:
+                            DisplayAllAvailibleBooks(theList);
+                            break;
+                        case 3:
+                            SearchIndex(theList);
+                            break;
+                        case 4:
+                            AddBook();
+                            break;
+                        case 5:
+                            CheckoutABook(theList);
+                            OverWritetextFile(theList);
+                            break;
+                        case 6:
+                            ReturnABook(theList);
+                            OverWritetextFile(theList);
+                            break;
+                        case 7:
+                            break;
+                        default:
+                            Console.WriteLine("Please enter a valid option");
+                            break;
+                    }
                 }
-            }
+            } while (userChoice != 7);
         }
     }
 
