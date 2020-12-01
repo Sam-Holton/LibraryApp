@@ -15,59 +15,8 @@ namespace LibraryApp
             string[] readText = File.ReadAllLines("../../../../listOfBooks.txt");
             List<Book> thelist = TextFileToBooKObject(readText);
             RunIt(thelist);
-
-
-<<<<<<< HEAD
-        public static List<Book> searchIndex()
-        {
-            Console.WriteLine("1. Author");
-            Console.WriteLine("2. Title");
-            Console.Write("Please select one of the above items to search by: ");
-            int userChoice;
-            List<Book> bookSearch = new List<Book>;
-
-            do
-            {
-                string userInput = Console.ReadLine();
-                if (int.TryParse(userInput, out userChoice) && userChoice > 0 && userChoice < 3)
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Please select either 1 for Author or 2 for Title: ");
-                }
-            } while (true);
-
-            switch (userChoice)
-            {
-                case 1:
-                    {
-                        Console.Write("Please enter in the last name of the Author you wish to search for: ");
-                        string author = Console.ReadLine();
-
-                        foreach (string book in listOfBooks)
-                        {
-                            if (listOfBooks[0] == author) Console.WriteLine(Book.Title);
-                        }
-                        break;
-                    }
-                case 2:
-                    {
-                        Console.Write("Please enter the Title of the book you are searching for: ");
-                        string title = Console.ReadLine();
-
-
-                    }
-            }
-                
-        }
-
-        public void AddBookTOList(Book newBook)
-=======
         }
         public static void OverWritetextFile(List<Book> newList)
->>>>>>> 6b0940dc61225e44e577edbd54ad4d81df38b02d
         {
             foreach (Book book in newList)
             {
@@ -91,6 +40,71 @@ namespace LibraryApp
                 bookList.Add(new Book(catagory[0], catagory[1], catagory[2], catagory[3]));
             }
             return bookList;
+        }
+
+        public static List<Book> searchIndex(List<Book> bookIndex)
+        {
+            Console.WriteLine("1. Author");
+            Console.WriteLine("2. Title");
+            Console.Write("Please select one of the above items to search by: ");
+            int userChoice;
+
+            do
+            {
+                string userInput = Console.ReadLine();
+                if (int.TryParse(userInput, out userChoice) && userChoice > 0 && userChoice < 3)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Please select either 1 for Author or 2 for Title: ");
+                }
+            } while (true);
+
+            switch (userChoice)
+            {
+                case 1:
+                    {
+                        Console.Write("Please enter in the last name of the Author you wish to search for: ");
+                        string author = Console.ReadLine();
+
+                        List<Book> searchList = new List<Book>();
+
+                        foreach (Book book in bookIndex)
+                        {
+                            if (author.Contains(book.Author, StringComparison.OrdinalIgnoreCase))
+                            {
+                                Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
+                                searchList.Add(book);
+                            }
+                        }
+                        return searchList;
+                    }
+                case 2:
+                    {
+                        Console.Write("Please enter the Title of the book you are searching for: ");
+                        string title = Console.ReadLine();
+
+                        List<Book> searchList = new List<Book>();
+
+                        foreach (Book book in bookIndex)
+                        {
+                            if (title.Contains(book.Title, StringComparison.OrdinalIgnoreCase))
+                            {
+                                Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
+                                searchList.Add(book);
+                            }
+                        }
+                        return searchList;
+                    }
+                default:
+                    {
+                        List<Book> searchList = new List<Book>();
+                        return searchList;
+                    };
+            }
+
         }
         public class Book
 
@@ -262,7 +276,7 @@ namespace LibraryApp
                         DisplayAllAvailibleBooks(thelist);
                         break;
                     case 3:
-                        SearchIt(thelist);
+                        searchIndex(thelist);
                         break;
                     case 4:
                         AddBook();
