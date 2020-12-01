@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 //text file is listOfBooks.txt
 namespace LibraryApp
 {
@@ -13,8 +11,8 @@ namespace LibraryApp
         static void Main(string[] args)
         {
             string[] readText = File.ReadAllLines("../../../../listOfBooks.txt");
-            List<Book> thelist = TextFileToBooKObject(readText);
-            RunIt(thelist);
+            List<Book> theList = TextFileToBooKObject(readText);
+            RunIt(theList);
 
 
         }
@@ -90,7 +88,7 @@ namespace LibraryApp
                 addRecord.WriteLine($"{title}<{author}<{status}<{dueDate}");
             Console.WriteLine("The book has been added!");
         }
-        public static void SearchCatagory(int userChoice,List<Book> thelist)
+        public static void SearchCatagory(int userChoice,List<Book> theList)
         {
             var indexToSearch = userChoice -1;
             if (indexToSearch == 0)
@@ -98,7 +96,7 @@ namespace LibraryApp
                 Console.WriteLine("Please enter the name of the author you would like to search for");
                 var searchCritera = Console.ReadLine();
                 {
-                    foreach (Book book in thelist)
+                    foreach (Book book in theList)
                     {
                         if (searchCritera.Contains(book.Author, StringComparison.OrdinalIgnoreCase))
                         {
@@ -113,7 +111,7 @@ namespace LibraryApp
                 Console.WriteLine("Please enter the title you would like to search for");
                 var searchCritera = Console.ReadLine();
                 {
-                    foreach (Book book in thelist)
+                    foreach (Book book in theList)
                     {
                         if (searchCritera.Contains(book.Title, StringComparison.OrdinalIgnoreCase))
                         {
@@ -124,17 +122,17 @@ namespace LibraryApp
             }
             
         }
-        public static void DisplayAllBooks(List<Book> thelist)
+        public static void DisplayAllBooks(List<Book> theList)
         {
-            foreach (Book book in thelist)
+            foreach (Book book in theList)
             {
                 Console.WriteLine($"Author:{book.Author} Title:{book.Title} Status:{book.Status}");
             }
 
         }
-        public static void DisplayAllAvailibleBooks(List<Book> thelist)
+        public static void DisplayAllAvailibleBooks(List<Book> theList)
         {
-            foreach (Book book in thelist)
+            foreach (Book book in theList)
             {
                 ;
                 if(book.Status == "Availible")
@@ -144,12 +142,12 @@ namespace LibraryApp
             }
             
         }  
-        public static List<Book> CheckoutABook(List<Book> thelist)
+        public static List<Book> CheckoutABook(List<Book> theList)
         {
             List<Book> newList = new List<Book>();
             Console.WriteLine("please enter the title of the book would you like to check out?");
             string userChoice = Console.ReadLine();
-            foreach (Book book in thelist)
+            foreach (Book book in theList)
             {
                 if (userChoice == book.Title && book.Status == "Availible")
                 {
@@ -160,12 +158,12 @@ namespace LibraryApp
             }
             return newList;
         }
-        public static List<Book> ReturnABook(List<Book> thelist)
+        public static List<Book> ReturnABook(List<Book> theList)
         {
             List<Book> newList = new List<Book>();
             Console.WriteLine("please enter the title of the book would you like to return?");
                 string userChoice = Console.ReadLine();
-            foreach (Book book in thelist)
+            foreach (Book book in theList)
             {
                 if (userChoice == book.Title && book.Status == "out")
                 {
@@ -179,7 +177,7 @@ namespace LibraryApp
               return newList;
         }
             
-        public static void SearchIt(List<Book> thelist)
+        public static void SearchIt(List<Book> theList)
         {
             int userChoice;
             Console.WriteLine("What would you like to search by");
@@ -189,11 +187,11 @@ namespace LibraryApp
             string userinput = Console.ReadLine();
             if (int.TryParse(userinput, out userChoice) && userChoice > 0 && userChoice < 3)
             {
-                SearchCatagory(userChoice, thelist);
+                SearchCatagory(userChoice, theList);
             }
-            while (true) ;
+            while (true);
         }
-        public static void RunIt(List<Book> thelist)
+        public static void RunIt(List<Book> theList)
         {
 
             int userChoice;
@@ -210,24 +208,24 @@ namespace LibraryApp
                 switch (userChoice)
                 {
                     case 1:
-                        DisplayAllBooks(thelist);
+                        DisplayAllBooks(theList);
                         break;
                     case 2:
-                        DisplayAllAvailibleBooks(thelist);
+                        DisplayAllAvailibleBooks(theList);
                         break;
                     case 3:
-                        SearchIt(thelist);
+                        SearchIt(theList);
                         break;
                     case 4:
                         AddBook();
                         break;
                     case 5:
-                        CheckoutABook(thelist);
-                        OverWritetextFile(thelist);
+                        CheckoutABook(theList);
+                        OverWritetextFile(theList);
                             break;
                     case 6:
-                        ReturnABook(thelist);
-                        OverWritetextFile(thelist);
+                        ReturnABook(theList);
+                        OverWritetextFile(theList);
                         break;
                     default:
                         Console.WriteLine("Please enter a valid option");
