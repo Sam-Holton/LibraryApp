@@ -20,10 +20,14 @@ namespace LibraryApp
         }
         public static void OverWritetextFile(List<Book> newList)
         {
+            var message = "this is only he to fix my busted bullshit";
+            File.WriteAllText("../../../../listOfBooks.txt", message);
             foreach (Book book in newList)
             {
-                var bookToAdd = $"{book.Author}<{book.Title}<{book.Status}<{book.DueDate}";
-                File.WriteAllText("../../../../listOfBooks.txt", bookToAdd);
+                
+                using (StreamWriter addRecord = File.AppendText("../../../../listOfBooks.txt"))
+                    addRecord.WriteLine($"{book.Title}<{book.Author}<{book.Status}<{book.DueDate}");
+
             }
         }
 
@@ -89,7 +93,6 @@ namespace LibraryApp
         public static void SearchCatagory(int userChoice,List<Book> thelist)
         {
             var indexToSearch = userChoice -1;
-            string[] readText = File.ReadAllLines("../../../../listOfBooks.txt");
             if (indexToSearch == 0)
             {
                 Console.WriteLine("Please enter the name of the author you would like to search for");
@@ -184,7 +187,7 @@ namespace LibraryApp
             Console.WriteLine("[2] Search by title");
 
             string userinput = Console.ReadLine();
-            if (int.TryParse(userinput, out userChoice) && userChoice > 0 && userChoice < 2)
+            if (int.TryParse(userinput, out userChoice) && userChoice > 0 && userChoice < 3)
             {
                 SearchCatagory(userChoice, thelist);
             }
