@@ -18,23 +18,14 @@ namespace LibraryApp
         }
         public static void OverWritetextFile(List<Book> newList)
         {
-            var message = "this is only he to fix my busted bullshit";
-            File.WriteAllText("../../../../listOfBooks.txt", message);
+            File.Create("../../../../listOfBooks.txt").Close();
             foreach (Book book in newList)
             {
-                
                 using (StreamWriter addRecord = File.AppendText("../../../../listOfBooks.txt"))
                     addRecord.WriteLine($"{book.Title}<{book.Author}<{book.Status}<{book.DueDate}");
-
             }
         }
 
-        public static string DateTimeToString()
-        {
-            DateTime now = DateTime.Now.AddDays(14);
-            string dueDate = now.ToString("yyyy-MM-ddTHH:mm:ss.fff");
-            return dueDate;
-        }
         public static List<Book> TextFileToBooKObject(string[] readText)
         {
             List<Book> bookList = new List<Book>();
@@ -76,14 +67,13 @@ namespace LibraryApp
             public string Mainlist { get; set; }
         }
         public static void AddBook()
-        {
-            var dateAndTime = DateTime.Now;
+        { 
             Console.WriteLine("What is the name of the book you want to add?");
             string author = Console.ReadLine();
             Console.WriteLine("Please enter the authors name");
             string title = Console.ReadLine();
             string status = "Availible";
-            var dueDate = dateAndTime.Date;
+            var dueDate = DateTime.Now.AddDays(14).ToString("yyyy-MM-dd");
             using (StreamWriter addRecord = File.AppendText("../../../../listOfBooks.txt"))
                 addRecord.WriteLine($"{title}<{author}<{status}<{dueDate}");
             Console.WriteLine("The book has been added!");
@@ -153,6 +143,7 @@ namespace LibraryApp
                 {
                     Console.WriteLine($"Thank you for checking out {book.Title} by {book.Author}");
                     book.Status = "out";
+                    book.DueDate = DateTime.Now.AddDays(14).ToString("yyyy-MM-dd"); 
                 }
                 newList.Add(new Book(book.Author, book.Title, book.Status, book.DueDate));
             }
@@ -169,7 +160,8 @@ namespace LibraryApp
                 {
                     Console.WriteLine($"Thank you for returnin {book.Title} by {book.Author}");
                     book.Status = "Availible";
-                    
+                    book.DueDate = DateTime.Now.ToString("yyyy-MM-dd");
+
                 }
                 newList.Add(new Book(book.Author, book.Title, book.Status, book.DueDate));
                 
