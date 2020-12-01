@@ -97,7 +97,7 @@ namespace LibraryApp
                 {
                     foreach (Book book in thelist)
                     {
-                        if (book.Author == searchCritera)
+                        if (searchCritera.Contains(book.Author, StringComparison.OrdinalIgnoreCase))
                         {
                             Console.WriteLine($"Author:{book.Author} Title:{book.Title}");
                         }
@@ -112,7 +112,7 @@ namespace LibraryApp
                 {
                     foreach (Book book in thelist)
                     {
-                        if (book.Title == searchCritera)
+                        if (searchCritera.Contains(book.Title, StringComparison.OrdinalIgnoreCase))
                         {
                             Console.WriteLine($"Author:{book.Author} Title:{book.Title}");
                         }
@@ -157,28 +157,25 @@ namespace LibraryApp
             }
             return newList;
         }
-        public static void ReturnABook(List<Book> thelist)
+        public static List<Book> ReturnABook(List<Book> thelist)
         {
-                Console.WriteLine("please enter the title of the book would you like to return?");
+            List<Book> newList = new List<Book>();
+            Console.WriteLine("please enter the title of the book would you like to return?");
                 string userChoice = Console.ReadLine();
-                foreach (Book book in thelist)
+            foreach (Book book in thelist)
+            {
+                if (userChoice == book.Title && book.Status == "out")
                 {
-                    if (userChoice == book.Title && book.Status == "out")
-                    {
-                        Console.WriteLine($"Thank you for returnin {book.Title} by {book.Author}");
-                        book.Status = "Availible";
-                        using (StreamWriter addRecord = new StreamWriter("../../../../listOfBooks.txt"))
-                            addRecord.WriteLine($"{book.Author}<{book.Title}<{book.Status}<{book.DueDate}");
-                    }
-
-                    else
-                    {
-                        using (StreamWriter addRecord = File.AppendText("../../../../listOfBooks.txt"))
-                            addRecord.WriteLine($"{book.Author}<{book.Title}<{book.Status}<{book.DueDate}");
-                    }
-
+                    Console.WriteLine($"Thank you for returnin {book.Title} by {book.Author}");
+                    book.Status = "Availible";
+                    
                 }
+                newList.Add(new Book(book.Author, book.Title, book.Status, book.DueDate));
+                
             }
+              return newList;
+        }
+            
         public static void SearchIt(List<Book> thelist)
         {
             int userChoice;
