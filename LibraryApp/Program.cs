@@ -10,12 +10,8 @@ namespace LibraryApp
 
         static void Main(string[] args)
         {
-            string[] readText = File.ReadAllLines("../../../../listOfBooks.txt");
-
-            List<Book> theList = TextFileToBooKObject(readText);
+            List<Book> theList = TextFileToBooKObject();
             RunIt(theList);
-
-
         }
         public static void OverWritetextFile(List<Book> newList)
         {
@@ -27,8 +23,9 @@ namespace LibraryApp
             }
         }
 
-        public static List<Book> TextFileToBooKObject(string[] readText)
+        public static List<Book> TextFileToBooKObject()
         {
+            string[] readText = File.ReadAllLines("../../../../listOfBooks.txt");
             List<Book> bookList = new List<Book>();
             foreach (string s in readText)
             {
@@ -146,7 +143,7 @@ namespace LibraryApp
             string author = Console.ReadLine();
             Console.WriteLine("Please enter the authors name");
             string title = Console.ReadLine();
-            string status = "Availible";
+            string status = "Available";
             var dueDate = DateTime.Now.AddDays(14).ToString("yyyy-MM-dd");
             using (StreamWriter addRecord = File.AppendText("../../../../listOfBooks.txt"))
                 addRecord.WriteLine($"{title}<{author}<{status}<{dueDate}");
@@ -194,12 +191,12 @@ namespace LibraryApp
             }
 
         }
-        public static void DisplayAllAvailibleBooks(List<Book> theList)
+        public static void DisplayAllAvailableBooks(List<Book> theList)
         {
             foreach (Book book in theList)
             {
                 ;
-                if(book.Status == "Availible")
+                if(book.Status == "Available")
                 {
                     Console.WriteLine($" Author:{book.Author} Title:{book.Title}");
                 }
@@ -213,7 +210,7 @@ namespace LibraryApp
             string userChoice = Console.ReadLine();
             foreach (Book book in theList)
             {
-                if (userChoice == book.Title && book.Status == "Availible")
+                if (userChoice == book.Title && book.Status == "Available")
                 {
                     Console.WriteLine($"Thank you for checking out {book.Title} by {book.Author}");
                     book.Status = "out";
@@ -232,8 +229,8 @@ namespace LibraryApp
             {
                 if (userChoice == book.Title && book.Status == "out")
                 {
-                    Console.WriteLine($"Thank you for returnin {book.Title} by {book.Author}");
-                    book.Status = "Availible";
+                    Console.WriteLine($"Thank you for returning {book.Title} by {book.Author}");
+                    book.Status = "Available";
                     book.DueDate = DateTime.Now.ToString("yyyy-MM-dd");
 
                 }
@@ -257,6 +254,19 @@ namespace LibraryApp
             }
             while (true);
         }
+
+        public static void UpdateIndex(List<Book> currentIndex)
+        {
+            string userPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            File.Create(userPath + @"\source\repos\LibraryApp\listOfBooks.txt").Close();
+            using (StreamWriter update = new StreamWriter(userPath + @"\source\repos\LibraryApp\listOfBooks.txt"))
+            {
+                foreach (var book in currentIndex)
+                {
+                    update.WriteLine($"{book.Title}<{book.Author}<{book.Status}<{book.DueDate}");
+                }
+            }
+        }
         public static void RunIt(List<Book> theList)
         {
 
@@ -266,7 +276,7 @@ namespace LibraryApp
                 Console.Clear();
                 Console.WriteLine("Welcome to our library what would you like to do?");
                 Console.WriteLine("[1] See all books");
-                Console.WriteLine("[2] See all availible books");
+                Console.WriteLine("[2] See all Available books");
                 Console.WriteLine("[3] Search books");
                 Console.WriteLine("[4] Add a book");
                 Console.WriteLine("[5] Checkout a book");
@@ -281,7 +291,7 @@ namespace LibraryApp
                             DisplayAllBooks(theList);
                             break;
                         case 2:
-                            DisplayAllAvailibleBooks(theList);
+                            DisplayAllAvailableBooks(theList);
                             break;
                         case 3:
                             SearchIndex(theList);
