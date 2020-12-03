@@ -1,11 +1,12 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 //text file is listOfBooks.txt
 namespace LibraryApp
 {
-    class Program
+    partial class Program
     {
 
         static void Main(string[] args)
@@ -40,6 +41,7 @@ namespace LibraryApp
 
         public static List<Book> SearchIndex(List<Book> bookIndex)
         {
+            List<Book> searchList = new List<Book>();
             Console.Clear();
             Console.WriteLine("[1] Author");
             Console.WriteLine("[2] Title");
@@ -66,9 +68,6 @@ namespace LibraryApp
                     {
                         Console.Write("Please enter in the last name of the Author you wish to search for: ");
                         string author = Console.ReadLine();
-
-                        List<Book> searchList = new List<Book>();
-
                         foreach (Book book in bookIndex)
                         {
                             if (book.Author.Contains(author, StringComparison.OrdinalIgnoreCase))
@@ -77,18 +76,12 @@ namespace LibraryApp
                                 searchList.Add(book);
                             }
                         }
-
-                        Console.WriteLine("\nPress Enter to Continue");
-                        Console.Read();
-                        return searchList;
+                        break;
                     }
                 case 2:
                     {
                         Console.Write("Please enter the Title of the book you are searching for: ");
                         string title = Console.ReadLine();
-
-                        List<Book> searchList = new List<Book>();
-
                         foreach (Book book in bookIndex)
                         {
                             if (book.Title.Contains(title, StringComparison.OrdinalIgnoreCase))
@@ -97,48 +90,16 @@ namespace LibraryApp
                                 searchList.Add(book);
                             }
                         }
-
-                        Console.WriteLine("\nPress Enter to Continue");
-                        Console.Read();
-                        return searchList;
+                        break;
                     }
                 default:
                     {
-                        List<Book> searchList = new List<Book>();
-                        return searchList;
+                        break;
                     };
+                    
             }
+            return searchList;
 
-        }
-        public class Book
-
-        {
-
-            public Book()
-            {
-                Author = string.Empty;
-                Title = string.Empty;
-                Status = string.Empty;
-                DueDate = string.Empty;
-               
-            }
-
-            public Book(string author, string title, string status, string dueDate)
-            {
-                Author = author;
-                Title = title;
-                Status = status;
-                DueDate = dueDate;
-            }
-
-            public string Author { get; set; }
-
-            public string Title { get; set; }
-
-            public string Status { get; set; }
-
-            public string DueDate { get; set; }
-            public string Mainlist { get; set; }
         }
         public static void AddBook()
         { 
@@ -257,13 +218,18 @@ namespace LibraryApp
             }
             while (true);
         }
+        public static void PressEnterToContinue()
+        {
+            Console.WriteLine("\nPress Enter to Continue");
+            Console.Read();
+            Console.Clear();
+        }
         public static void RunIt(List<Book> theList)
         {
 
             int userChoice;
             do
             {
-                Console.Clear();
                 Console.WriteLine("Welcome to our library what would you like to do?");
                 Console.WriteLine("[1] See all books");
                 Console.WriteLine("[2] See all availible books");
@@ -279,23 +245,29 @@ namespace LibraryApp
                     {
                         case 1:
                             DisplayAllBooks(theList);
+                            PressEnterToContinue();
                             break;
                         case 2:
                             DisplayAllAvailibleBooks(theList);
+                            PressEnterToContinue();
                             break;
                         case 3:
                             SearchIndex(theList);
+                            PressEnterToContinue();
                             break;
                         case 4:
                             AddBook();
+                            PressEnterToContinue();
                             break;
                         case 5:
                             CheckoutABook(theList);
                             OverWritetextFile(theList);
+                            PressEnterToContinue();
                             break;
                         case 6:
                             ReturnABook(theList);
                             OverWritetextFile(theList);
+                            PressEnterToContinue();
                             break;
                         case 7:
                             break;
@@ -305,7 +277,7 @@ namespace LibraryApp
                     }
                 }
             } while (userChoice != 7);
-        }
+        }    DateTime date = DateTime.ParseExact(book.duedate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
     }
 
 }
