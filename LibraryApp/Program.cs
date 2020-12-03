@@ -43,7 +43,7 @@ namespace LibraryApp
             return bookList;
         }
 
-        public static List<Book> SearchIndex(List<Book> bookIndex)
+        public static void SearchIndex(List<Book> bookIndex)
         {
             List<Book> searchList = new List<Book>();
             Console.Clear();
@@ -77,7 +77,6 @@ namespace LibraryApp
                             if (book.Author.Contains(author, StringComparison.OrdinalIgnoreCase))
                             {
                                 Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
-                                searchList.Add(book);
                             }
                         }
                         break;
@@ -91,7 +90,6 @@ namespace LibraryApp
                             if (book.Title.Contains(title, StringComparison.OrdinalIgnoreCase))
                             {
                                 Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
-                                searchList.Add(book);
                             }
                         }
                         break;
@@ -102,8 +100,6 @@ namespace LibraryApp
                     };
                     
             }
-            return searchList;
-
         }
         public static void AddBook()
         { 
