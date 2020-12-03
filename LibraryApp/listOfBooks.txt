@@ -1,4 +1,4 @@
-me,hello world,Availible,11/29/2020 12:00:00 AM 
-me,hello,Availible,11/29/2020 12:00:00 AM 
-me,hello world,Availible,11/29/2020 12:00:00 AM 
-me,hello,Availible,11/29/2020 12:00:00 AM 
+Isaac Asimov<Foundation<Availible<2020-12-17
+Stephen R Lawhead<Song of Albion<Availible<2020-12-17
+Orson Scott Card<Enders Game<Availible<2020-12-17
+C J Cherryh<Pride of Chanur<Availible<2020-12-17
