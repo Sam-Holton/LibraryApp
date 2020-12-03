@@ -94,7 +94,11 @@ namespace LibraryApp
                                 {
                                     if (book.Author.Contains(author, StringComparison.OrdinalIgnoreCase))
                                     {
-                                        Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
+                                        Console.Write($"{book.Title}, by {book.Author} : ");
+                                        if (book.Status == "out") Console.ForegroundColor = ConsoleColor.Red;
+                                        else Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine($"{book.Status}");
+                                        Console.ForegroundColor = ConsoleColor.White;
                                         acc++;
                                     }
                                 }
@@ -145,11 +149,12 @@ namespace LibraryApp
                                 int acc = 0;
                                 foreach (Book book in bookIndex)
                                 {
-                                    if (book.Title.Contains(title, StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
-                                        acc++;
-                                    }
+                                    Console.Write($"{book.Title}, by {book.Author} : ");
+                                    if (book.Status == "out") Console.ForegroundColor = ConsoleColor.Red;
+                                    else Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine($"{book.Status}");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    acc++;
                                 }
 
                                 if (acc == 0)
