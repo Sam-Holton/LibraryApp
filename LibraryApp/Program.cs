@@ -190,7 +190,7 @@ namespace LibraryApp
         }
         public static void CheckIfOverdue(Book book)
         {
-            DateTime dueDate = DateTime.ParseExact(book.duedate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime dueDate = DateTime.ParseExact(book.DueDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             if (DateTime.Now > dueDate)
             {
