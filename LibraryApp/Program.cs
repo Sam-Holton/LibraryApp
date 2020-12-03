@@ -114,7 +114,7 @@ namespace LibraryApp
             string status = "Availible";
             var dueDate = DateTime.Now.AddDays(14).ToString("yyyy-MM-dd");
             using (StreamWriter addRecord = File.AppendText("../../../../listOfBooks.txt"))
-                addRecord.WriteLine($"{title}<{author}<{status}<{dueDate}");
+                addRecord.WriteLine($"{author}<{title}<{status}<{dueDate}");
             Console.WriteLine("The book has been added!");
         }
         public static void SearchCatagory(int userChoice,List<Book> theList)
@@ -278,6 +278,7 @@ namespace LibraryApp
                         case 4:
                             AddBook();
                             PressEnterToContinue();
+                            OverWritetextFile(theList);
                             break;
                         case 5:
                             CheckoutABook(theList);
