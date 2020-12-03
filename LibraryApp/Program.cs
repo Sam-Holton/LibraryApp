@@ -53,52 +53,138 @@ namespace LibraryApp
             Console.Write("Please select one of the above items to search by: ");
             int userChoice;
 
-            do
+            try
             {
-                string userInput = Console.ReadLine();
-                if (int.TryParse(userInput, out userChoice) && userChoice > 0 && userChoice < 3)
+                do
                 {
-                    break;
-                }
-                else
-                {
-                    Console.Write("Please select either 1 for Author or 2 for Title: ");
-                }
-            } while (true);
+                    string userInput = Console.ReadLine();
+                    if (int.TryParse(userInput, out userChoice) && userChoice > 0 && userChoice < 3)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.Write("Please select either [1] for Author or [2] for Title: ");
+                    }
+                } while (true);
 
-            switch (userChoice)
+                switch (userChoice)
+                {
+                    case 1:
+                        {
+                            bool repeat;
+                            do
+                            {
+                                repeat = false;
+                                Console.Clear();
+                                Console.Write("Please enter in the last name of the Author you wish to search for: ");
+                                string author = Console.ReadLine();
+
+                                while (author == "")
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("No Input Was Detected.");
+                                    Console.WriteLine();
+                                    Console.Write("Please enter in the last name of the Author you wish to search for: ");
+                                    author = Console.ReadLine();
+                                }
+
+                                int acc = 0;
+                                foreach (Book book in bookIndex)
+                                {
+                                    if (book.Author.Contains(author, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
+                                        acc++;
+                                    }
+                                }
+
+                                if (acc == 0)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine($"I'm sorry but {author} wasn't found in our library.");
+                                    Console.WriteLine();
+                                    Console.Write("Would you like to try again? [Y/N]: ");
+                                    string userInput = Console.ReadLine().ToLower();
+
+                                    while (!(userInput == "y" || userInput == "n"))
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("Response Not Recognized.");
+                                        Console.WriteLine();
+                                        Console.Write("Would you like to try again? Y for Yes or N for No [Y/N]: ");
+                                        userInput = Console.ReadLine().ToLower();
+                                    }
+
+                                    if (userInput == "y") repeat = true;
+                                    else repeat = false;
+                                }
+                            } while (repeat);
+
+                            break;
+                        }
+                    case 2:
+                        {
+                            bool repeat;
+                            do
+                            {
+                                repeat = false;
+                                Console.Clear();
+                                Console.Write("Please enter a Book Title or part of the Book Title: ");
+                                string title = Console.ReadLine();
+
+                                while (title == "")
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("No Input Was Detected.");
+                                    Console.WriteLine();
+                                    Console.Write("Please enter a Book Title or part of the Book Title: ");
+                                    title = Console.ReadLine();
+                                }
+
+                                int acc = 0;
+                                foreach (Book book in bookIndex)
+                                {
+                                    if (book.Title.Contains(title, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
+                                        acc++;
+                                    }
+                                }
+
+                                if (acc == 0)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine($"I'm sorry but {title} wasn't found in our library.");
+                                    Console.WriteLine();
+                                    Console.Write("Would you like to try again? [Y/N]: ");
+                                    string userInput = Console.ReadLine().ToLower();
+
+                                    while (!(userInput == "y" || userInput == "n"))
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("Response Not Recognized.");
+                                        Console.WriteLine();
+                                        Console.Write("Would you like to try again? Y for Yes or N for No [Y/N]: ");
+                                        userInput = Console.ReadLine().ToLower();
+                                    }
+
+                                    if (userInput == "y") repeat = true;
+                                    else repeat = false;
+                                }
+                            } while (repeat);
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        };
+
+                }
+            }
+            catch (Exception e)
             {
-                case 1:
-                    {
-                        Console.Write("Please enter in the last name of the Author you wish to search for: ");
-                        string author = Console.ReadLine();
-                        foreach (Book book in bookIndex)
-                        {
-                            if (book.Author.Contains(author, StringComparison.OrdinalIgnoreCase))
-                            {
-                                Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
-                            }
-                        }
-                        break;
-                    }
-                case 2:
-                    {
-                        Console.Write("Please enter the Title of the book you are searching for: ");
-                        string title = Console.ReadLine();
-                        foreach (Book book in bookIndex)
-                        {
-                            if (book.Title.Contains(title, StringComparison.OrdinalIgnoreCase))
-                            {
-                                Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
-                            }
-                        }
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    };
-                    
+                Console.WriteLine($"Get rid of that whitespace in the .TXT file! {e}");
             }
         }
         public static void AddBook()
