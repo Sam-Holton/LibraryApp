@@ -15,7 +15,7 @@ namespace LibraryApp
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
 
-            string[] readText = File.ReadAllLines("../../../../listOfBooks.txt");
+            string[] readText = File.ReadAllLines("../../../listOfBooks.txt");
 
             List<Book> theList = TextFileToBooKObject(readText);
             RunIt(theList);
@@ -24,7 +24,7 @@ namespace LibraryApp
         }
         public static void OverWritetextFile(List<Book> newList)
         {
-            File.Create("../../../../listOfBooks.txt").Close();
+            File.Create("../../../listOfBooks.txt").Close();
             foreach (Book book in newList)
             {
                 using (StreamWriter addRecord = File.AppendText("../../../../listOfBooks.txt"))
@@ -200,7 +200,7 @@ namespace LibraryApp
             string title = Console.ReadLine();
             string status = "Availible";
             var dueDate = DateTime.Now.AddDays(14).ToString("yyyy-MM-dd");
-            using (StreamWriter addRecord = File.AppendText("../../../../listOfBooks.txt"))
+            using (StreamWriter addRecord = File.AppendText("../../../listOfBooks.txt"))
                 addRecord.WriteLine($"{title}<{author}<{status}<{dueDate}");
             Console.WriteLine("The book has been added!");
         }
