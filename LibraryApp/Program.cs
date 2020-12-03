@@ -277,7 +277,7 @@ namespace LibraryApp
                     }
                 }
             } while (userChoice != 7);
-        }    DateTime date = DateTime.ParseExact(book.duedate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+        }
     }
 
 }
