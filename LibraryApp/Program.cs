@@ -10,6 +10,10 @@ namespace LibraryApp
 
         static void Main(string[] args)
         {
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
+
             string[] readText = File.ReadAllLines("../../../../listOfBooks.txt");
 
             List<Book> theList = TextFileToBooKObject(readText);
@@ -223,19 +227,35 @@ namespace LibraryApp
             }
             return newList;
         }
+        public static void CheckIfOverdue(Book book)
+        {
+            DateTime dueDate = DateTime.ParseExact(book.duedate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            if (DateTime.Now > dueDate)
+            {
+                Console.WriteLine("Your book is overdue! FOR SHAME!");
+            }
+            else
+            {
+                Console.WriteLine("Thank you for returning your book on time!");
+            }
+        }
+
         public static List<Book> ReturnABook(List<Book> theList)
         {
             List<Book> newList = new List<Book>();
             Console.WriteLine("please enter the title of the book would you like to return?");
                 string userChoice = Console.ReadLine();
+
             foreach (Book book in theList)
             {
                 if (userChoice == book.Title && book.Status == "out")
                 {
+                    CheckIfOverdue(book);
+                    
                     Console.WriteLine($"Thank you for returnin {book.Title} by {book.Author}");
                     book.Status = "Availible";
                     book.DueDate = DateTime.Now.ToString("yyyy-MM-dd");
-
                 }
                 newList.Add(new Book(book.Author, book.Title, book.Status, book.DueDate));
                 
