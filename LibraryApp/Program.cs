@@ -15,7 +15,7 @@ namespace LibraryApp
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
 
-            string[] readText = File.ReadAllLines("../../../../listOfBooks.txt");
+            string[] readText = File.ReadAllLines("../../../listOfBooks.txt");
 
             List<Book> theList = TextFileToBooKObject(readText);
             RunIt(theList);
@@ -24,7 +24,7 @@ namespace LibraryApp
         }
         public static void OverWritetextFile(List<Book> newList)
         {
-            File.Create("../../../../listOfBooks.txt").Close();
+            File.Create("../../../listOfBooks.txt").Close();
             foreach (Book book in newList)
             {
                 using (StreamWriter addRecord = File.AppendText("../../../../listOfBooks.txt"))
@@ -43,7 +43,7 @@ namespace LibraryApp
             return bookList;
         }
 
-        public static List<Book> SearchIndex(List<Book> bookIndex)
+        public static void SearchIndex(List<Book> bookIndex)
         {
             List<Book> searchList = new List<Book>();
             Console.Clear();
@@ -53,57 +53,144 @@ namespace LibraryApp
             Console.Write("Please select one of the above items to search by: ");
             int userChoice;
 
-            do
+            try
             {
-                string userInput = Console.ReadLine();
-                if (int.TryParse(userInput, out userChoice) && userChoice > 0 && userChoice < 3)
+                do
                 {
-                    break;
-                }
-                else
-                {
-                    Console.Write("Please select either 1 for Author or 2 for Title: ");
-                }
-            } while (true);
+                    string userInput = Console.ReadLine();
+                    if (int.TryParse(userInput, out userChoice) && userChoice > 0 && userChoice < 3)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.Write("Please select either [1] for Author or [2] for Title: ");
+                    }
+                } while (true);
 
-            switch (userChoice)
-            {
-                case 1:
-                    {
-                        Console.Write("Please enter in the last name of the Author you wish to search for: ");
-                        string author = Console.ReadLine();
-                        foreach (Book book in bookIndex)
+                switch (userChoice)
+                {
+                    case 1:
                         {
-                            if (book.Author.Contains(author, StringComparison.OrdinalIgnoreCase))
+                            bool repeat;
+                            do
                             {
-                                Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
-                                searchList.Add(book);
-                            }
+                                repeat = false;
+                                Console.Clear();
+                                Console.Write("Please enter in the last name of the Author you wish to search for: ");
+                                string author = Console.ReadLine();
+
+                                while (author == "")
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("No Input Was Detected.");
+                                    Console.WriteLine();
+                                    Console.Write("Please enter in the last name of the Author you wish to search for: ");
+                                    author = Console.ReadLine();
+                                }
+
+                                int acc = 0;
+                                foreach (Book book in bookIndex)
+                                {
+                                    if (book.Author.Contains(author, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        Console.Write($"{book.Title}, by {book.Author} : ");
+                                        if (book.Status == "out") Console.ForegroundColor = ConsoleColor.Red;
+                                        else Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine($"{book.Status}");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        acc++;
+                                    }
+                                }
+
+                                if (acc == 0)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine($"I'm sorry but {author} wasn't found in our library.");
+                                    Console.WriteLine();
+                                    Console.Write("Would you like to try again? [Y/N]: ");
+                                    string userInput = Console.ReadLine().ToLower();
+
+                                    while (!(userInput == "y" || userInput == "n"))
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("Response Not Recognized.");
+                                        Console.WriteLine();
+                                        Console.Write("Would you like to try again? Y for Yes or N for No [Y/N]: ");
+                                        userInput = Console.ReadLine().ToLower();
+                                    }
+
+                                    if (userInput == "y") repeat = true;
+                                    else repeat = false;
+                                }
+                            } while (repeat);
+
+                            break;
                         }
-                        break;
-                    }
-                case 2:
-                    {
-                        Console.Write("Please enter the Title of the book you are searching for: ");
-                        string title = Console.ReadLine();
-                        foreach (Book book in bookIndex)
+                    case 2:
                         {
-                            if (book.Title.Contains(title, StringComparison.OrdinalIgnoreCase))
+                            bool repeat;
+                            do
                             {
-                                Console.WriteLine($"{book.Title}, by {book.Author} : {book.Status}");
-                                searchList.Add(book);
-                            }
+                                repeat = false;
+                                Console.Clear();
+                                Console.Write("Please enter a Book Title or part of the Book Title: ");
+                                string title = Console.ReadLine();
+
+                                while (title == "")
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("No Input Was Detected.");
+                                    Console.WriteLine();
+                                    Console.Write("Please enter a Book Title or part of the Book Title: ");
+                                    title = Console.ReadLine();
+                                }
+
+                                int acc = 0;
+                                foreach (Book book in bookIndex)
+                                {
+                                    Console.Write($"{book.Title}, by {book.Author} : ");
+                                    if (book.Status == "out") Console.ForegroundColor = ConsoleColor.Red;
+                                    else Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine($"{book.Status}");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    acc++;
+                                }
+
+                                if (acc == 0)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine($"I'm sorry but {title} wasn't found in our library.");
+                                    Console.WriteLine();
+                                    Console.Write("Would you like to try again? [Y/N]: ");
+                                    string userInput = Console.ReadLine().ToLower();
+
+                                    while (!(userInput == "y" || userInput == "n"))
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("Response Not Recognized.");
+                                        Console.WriteLine();
+                                        Console.Write("Would you like to try again? Y for Yes or N for No [Y/N]: ");
+                                        userInput = Console.ReadLine().ToLower();
+                                    }
+
+                                    if (userInput == "y") repeat = true;
+                                    else repeat = false;
+                                }
+                            } while (repeat);
+                            break;
                         }
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    };
-                    
+                    default:
+                        {
+                            break;
+                        };
+
+                }
             }
-            return searchList;
-
+            catch (Exception e)
+            {
+                Console.WriteLine($"Get rid of that whitespace in the .TXT file! {e}");
+            }
         }
         public static void AddBook()
         { 
@@ -114,7 +201,7 @@ namespace LibraryApp
             string status = "Availible";
             var dueDate = DateTime.Now.AddDays(14).ToString("yyyy-MM-dd");
             using (StreamWriter addRecord = File.AppendText("../../../../listOfBooks.txt"))
-                addRecord.WriteLine($"{author}<{title}<{status}<{dueDate}");
+                addRecord.WriteLine($"{title}<{author}<{status}<{dueDate}");
             Console.WriteLine("The book has been added!");
         }
         public static void SearchCatagory(int userChoice,List<Book> theList)
