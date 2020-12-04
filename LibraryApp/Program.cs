@@ -337,8 +337,8 @@ namespace LibraryApp
         public static void RunIt(List<Book> theList)
         {
 
-            int userChoice;
-            do
+            int userChoice = 0;
+            while (userChoice != 7)
             {
                 Console.WriteLine("Welcome to our library what would you like to do?");
                 Console.WriteLine("[1] See all books");
@@ -387,7 +387,7 @@ namespace LibraryApp
                             break;
                     }
                 }
-            } while (userChoice != 7);
+            }
         }
     }
 
