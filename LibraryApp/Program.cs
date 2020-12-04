@@ -149,12 +149,15 @@ namespace LibraryApp
                                 int acc = 0;
                                 foreach (Book book in bookIndex)
                                 {
-                                    Console.Write($"{book.Title}, by {book.Author} : ");
-                                    if (book.Status == "out") Console.ForegroundColor = ConsoleColor.Red;
-                                    else Console.ForegroundColor = ConsoleColor.Green;
-                                    Console.WriteLine($"{book.Status}");
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    acc++;
+                                    if (book.Title.Contains(title, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        Console.Write($"{book.Title}, by {book.Author} : ");
+                                        if (book.Status == "out") Console.ForegroundColor = ConsoleColor.Red;
+                                        else Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine($"{book.Status}");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        acc++;
+                                    }
                                 }
 
                                 if (acc == 0)
