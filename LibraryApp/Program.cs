@@ -27,8 +27,8 @@ namespace LibraryApp
             File.Create("../../../listOfBooks.txt").Close();
             foreach (Book book in newList)
             {
-                using (StreamWriter addRecord = File.AppendText("../../../../listOfBooks.txt"))
-                    addRecord.WriteLine($"{book.Title}<{book.Author}<{book.Status}<{book.DueDate}");
+                using (StreamWriter addRecord = File.AppendText("../../../listOfBooks.txt"))
+                    addRecord.WriteLine($"{book.Author}<{book.Title}<{book.Status}<{book.DueDate}");
             }
         }
 
@@ -336,6 +336,7 @@ namespace LibraryApp
         }
         public static void RunIt(List<Book> theList)
         {
+           
 
             int userChoice = 0;
             while (userChoice != 7)
@@ -349,6 +350,7 @@ namespace LibraryApp
                 Console.WriteLine("[6] Return a book");
                 Console.WriteLine("[7] Exit Program");
                 string userinput = Console.ReadLine();
+                Console.Clear();
                 if (int.TryParse(userinput, out userChoice) && userChoice > 0 && userChoice < 8)
                 {
                     switch (userChoice)
